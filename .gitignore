@@ -2,6 +2,7 @@
 *.db 
 *.log
 
+
 # Bin
-bin/
+bin/ 
 target/
