@@ -1,0 +1,7 @@
+# DB, Log
+*.db 
+*.log
+
+# Bin
+bin/
+target/
