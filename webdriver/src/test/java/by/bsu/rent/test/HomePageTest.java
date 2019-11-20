@@ -1,33 +1,17 @@
-package by.bsu.rent.page;
+package by.bsu.rent.test;
 
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
+
+import by.bsu.rent.page.HomePage;
+import org.testng.annotations.Test;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class HomePageTest {
-    private WebDriver driver;
-    private HomePage page;
-
-    @BeforeEach
-    public void setUpMozillaDriver() {
-        System.setProperty("webdriver.gecko.driver", "D:\\testing\\automation-training\\webdriver\\resources\\geckodriver.exe");
-        driver = new FirefoxDriver();
-        page = new HomePage(driver);
-        driver.manage().window().maximize();
-    }
-    @AfterEach
-    public void tearDownMozillaDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
+public class HomePageTest extends CommonConditions {
     @Test
     public void invalidAgeTest() throws InterruptedException {
+        HomePage page = new HomePage(driver).openPage();
         String country = "Белоруссия";
         String city = "Минск";
         String place = "Минск Международный Aэропорт (MSQ)";
@@ -45,6 +29,7 @@ public class HomePageTest {
     }
     @Test
     public void emptyInputTest() {
+        HomePage page = new HomePage(driver).openPage();
         page.search();
         String expectedError = "Пожалуйста, выберите место доставки.";
         assertTrue(page.checkCountryErrorMessage(expectedError));

@@ -1,5 +1,7 @@
 package by.bsu.rent.page;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,17 +9,20 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePage {
+public class HomePage extends AbstractPage {
+    private static final Logger LOGGER = LogManager.getRootLogger();
     private final String HOMEPAGE_URL = "http://www.economycarrentals.com";
-    private final int WAIT_TIMEOUT_SECONDS = 30;
-    private WebDriver driver;
     private WebDriverWait wait;
 
     public HomePage(WebDriver driver) {
-        this.driver = driver;
-        driver.get(HOMEPAGE_URL);
+        super(driver);
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
+    }
+    public HomePage openPage() {
+        driver.navigate().to(HOMEPAGE_URL);
+        LOGGER.info("Home page opened");
+        return this;
     }
 
     @FindBy(xpath = "//*[@id=\"search-location-pickup\"]")
