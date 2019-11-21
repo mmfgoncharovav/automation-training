@@ -1,27 +1,26 @@
 package by.bsu.rent.test;
 
 
+import by.bsu.rent.driver.DriverSingleton;
+import by.bsu.rent.util.TestListener;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
+@Listeners({TestListener.class})
 public class CommonConditions {
     protected WebDriver driver;
     private static final String RESOURCES_PATH = "src\\test\\resources\\";
 
     @BeforeMethod
-    public void setUpMozillaDriver() {
-        System.setProperty("webdriver.gecko.driver", RESOURCES_PATH + "geckodriver.exe");
-        driver = new FirefoxDriver();
-        driver.manage().window().maximize();
+    public void setUpDriver() {
+        driver = DriverSingleton.getDriver();
+
     }
-    @AfterMethod
+    @AfterMethod (alwaysRun = true)
     public void tearDownMozillaDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
+        DriverSingleton.closeDriver();
     }
 
 }

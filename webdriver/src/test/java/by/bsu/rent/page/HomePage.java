@@ -1,5 +1,8 @@
 package by.bsu.rent.page;
 
+import by.bsu.rent.model.Age;
+import by.bsu.rent.model.PageError;
+import by.bsu.rent.model.Place;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -11,8 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends AbstractPage {
     private static final Logger LOGGER = LogManager.getRootLogger();
-    private final String HOMEPAGE_URL = "http://www.economycarrentals.com";
-    private WebDriverWait wait;
+    private final String HOMEPAGE_URL = "https://www.economycarrentals.com/en-us";
+    private final WebDriverWait wait;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -58,23 +61,39 @@ public class HomePage extends AbstractPage {
         dropdown.selectByVisibleText(city);
     }
 
-    public void selectPlace(String place) {
+    public void selectPlaceInCity(String place) {
         Select dropdown = new Select(placeSelect);
         dropdown.selectByVisibleText(place);
     }
 
-    public void setAge(String age) {
+    public void selectCompletePlace(Place place){
+        try {
+            selectCountry(place.getCountry());
+            Thread.sleep(5000);
+            selectCity(place.getCity());
+            Thread.sleep(5000);
+            selectPlaceInCity(place.getPlaceInCity());
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Unexpected interrupt",ex);
+        }
+
+    }
+
+    public void setAge(Age age) {
         ageValue.click();
         ageValue.clear();
-        ageValue.sendKeys(age);
+        String ageString = String.valueOf(age.getAge());
+        ageValue.sendKeys(ageString);
 
     }
 
-    public boolean checkAgeErrorMessage(String errorMessage) {
-        return ageError.isDisplayed() && ageError.getText().contains(errorMessage);
+    public boolean checkAgeErrorMessage(PageError error) {
+        return ageError.isDisplayed() && ageError.getText().contains(error.getErrorDescription());
     }
 
-    public boolean checkCountryErrorMessage(String errorMessage) {
-        return countryError.isDisplayed() && countryError.getText().contains(errorMessage);
+    public boolean checkPlaceErrorMessage(PageError error) {
+        return countryError.isDisplayed() && countryError.getText().contains(error.getErrorDescription());
     }
 }
