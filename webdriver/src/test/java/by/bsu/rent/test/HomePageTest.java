@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 
 public class HomePageTest extends CommonConditions {
-    @Test
+    @Test(description = "Test for checking working age restrictions")
     public void invalidAgeTest() {
         HomePage page = new HomePage(driver).openPage();
         Place place = PlaceCreator.withInfoFromProperty();
@@ -26,7 +26,7 @@ public class HomePageTest extends CommonConditions {
         PageError expectedError = PageErrorCreator.AgeErrorWithInfoFromProperty();
         Assert.assertTrue(page.checkAgeErrorMessage(expectedError));
     }
-    @Test
+    @Test(description = "Test for checking being able to search for cars without specifying any info")
     public void emptyInputTest() {
         HomePage page = new HomePage(driver).openPage();
         page.search();

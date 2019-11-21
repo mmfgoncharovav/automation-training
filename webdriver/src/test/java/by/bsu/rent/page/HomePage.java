@@ -14,7 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends AbstractPage {
     private static final Logger LOGGER = LogManager.getRootLogger();
-    private final String HOMEPAGE_URL = "https://www.economycarrentals.com/en-us";
+    private final String HOMEPAGE_URL =
+            "https://www.economycarrentals.com/en-us";
     private final WebDriverWait wait;
 
     public HomePage(WebDriver driver) {
@@ -90,10 +91,14 @@ public class HomePage extends AbstractPage {
     }
 
     public boolean checkAgeErrorMessage(PageError error) {
-        return ageError.isDisplayed() && ageError.getText().contains(error.getErrorDescription());
+        return ageError.isDisplayed()
+                && ageError.getText().
+                        contains(error.getErrorDescription());
     }
 
     public boolean checkPlaceErrorMessage(PageError error) {
-        return countryError.isDisplayed() && countryError.getText().contains(error.getErrorDescription());
+        return countryError.isDisplayed()
+                && countryError.getText().
+                contains(error.getErrorDescription());
     }
 }
