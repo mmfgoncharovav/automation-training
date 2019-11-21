@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -71,19 +72,12 @@ public class HomePage extends AbstractPage {
     }
 
     public void selectCompletePlace(Place place){
-        try {
-            Thread.sleep(1000);
+            wait.until(ExpectedConditions.elementToBeClickable(countrySelect));
             selectCountry(place.getCountry());
-            Thread.sleep(5000);
+            wait.until(ExpectedConditions.elementToBeClickable(citySelect));
             selectCity(place.getCity());
-            Thread.sleep(5000);
+            wait.until(ExpectedConditions.elementToBeClickable(placeSelect));
             selectPlaceInCity(place.getPlaceInCity());
-        } catch (InterruptedException ex) {
-            LOGGER.error(ex.getMessage());
-            Thread.currentThread().interrupt();
-            throw new RuntimeException("Unexpected interrupt",ex);
-        }
-
     }
 
     public void setAge(Age age) {
