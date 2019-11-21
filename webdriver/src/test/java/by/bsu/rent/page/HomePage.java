@@ -4,6 +4,7 @@ import by.bsu.rent.model.Age;
 import by.bsu.rent.model.Language;
 import by.bsu.rent.model.PageError;
 import by.bsu.rent.model.Place;
+import by.bsu.rent.util.LinksByLanguage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class HomePage extends AbstractPage {
     private static final Logger LOGGER = LogManager.getRootLogger();
@@ -25,9 +27,16 @@ public class HomePage extends AbstractPage {
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
     }
+
     public HomePage openPage() {
         driver.navigate().to(HOMEPAGE_URL);
         LOGGER.info("Home page opened");
+        return this;
+    }
+
+    public HomePage openPageDifferentLanguage(Language language) {
+        String link = LinksByLanguage.init().getLinkByLanguage(language);
+        driver.navigate().to(link);
         return this;
     }
 
@@ -54,30 +63,35 @@ public class HomePage extends AbstractPage {
         searchButton.click();
     }
 
-    public void setAgeCheckButton(){
+    public void setAgeCheckButton() {
         ageCheckButton.click();
     }
+
     public void selectCountry(String country) {
         Select dropdown = new Select(countrySelect);
         dropdown.selectByVisibleText(country);
+        LOGGER.info(country+ " selected");
     }
+
     public void selectCity(String city) {
         Select dropdown = new Select(citySelect);
         dropdown.selectByVisibleText(city);
+        LOGGER.info(city+ " selected");
     }
 
     public void selectPlaceInCity(String place) {
         Select dropdown = new Select(placeSelect);
         dropdown.selectByVisibleText(place);
+        LOGGER.info(place+ " selected");
     }
 
-    public void selectCompletePlace(Place place){
-            wait.until(ExpectedConditions.elementToBeClickable(countrySelect));
-            selectCountry(place.getCountry());
-            wait.until(ExpectedConditions.elementToBeClickable(citySelect));
-            selectCity(place.getCity());
-            wait.until(ExpectedConditions.elementToBeClickable(placeSelect));
-            selectPlaceInCity(place.getPlaceInCity());
+    public void selectCompletePlace(Place place) {
+        wait.until(ExpectedConditions.elementToBeClickable(countrySelect));
+        selectCountry(place.getCountry());
+        wait.until(ExpectedConditions.elementToBeClickable(citySelect));
+        selectCity(place.getCity());
+        wait.until(ExpectedConditions.elementToBeClickable(placeSelect));
+        selectPlaceInCity(place.getPlaceInCity());
     }
 
     public void setAge(Age age) {
@@ -85,13 +99,14 @@ public class HomePage extends AbstractPage {
         ageValue.clear();
         String ageString = String.valueOf(age.getAge());
         ageValue.sendKeys(ageString);
+        LOGGER.info("age set to " + age.getAge());
 
     }
 
     public boolean checkAgeErrorMessage(PageError error) {
         return ageError.isDisplayed()
                 && ageError.getText().
-                        contains(error.getErrorDescription());
+                contains(error.getErrorDescription());
     }
 
     public boolean checkPlaceErrorMessage(PageError error) {
@@ -100,11 +115,18 @@ public class HomePage extends AbstractPage {
                 contains(error.getErrorDescription());
     }
 
-    public HomePageGerman changeLanguage(Language language) {
+    public HomePage changeLanguage(Language language) {
         Select dropdown = new Select(languageSelector);
         dropdown.selectByVisibleText(language.getLanguage());
         LOGGER.info("Language changed to " + language.getLanguage());
-        return new HomePageGerman(driver);
+        return new HomePage(driver);
 
+    }
+    public String checkCurrentLanguage() {
+        Select dropdown = new Select(languageSelector);
+        WebElement option = dropdown.getFirstSelectedOption();
+        String text = option.getText();
+        LOGGER.info("Current language of the page is" + text);
+        return text;
     }
 }

@@ -2,8 +2,8 @@
 
 <suite name="Smoke" verbose="1">
     <test name="LanguageChanging" >
-        <packages>
-            <package name="by.bsu.rent.test"/>
-        </packages>
+        <classes>
+            <class name="by.bsu.rent.test.LanguageChangingTest"/>
+        </classes>
     </test>
 </suite>
