@@ -1,6 +1,7 @@
 package by.bsu.rent.page;
 
 import by.bsu.rent.model.Age;
+import by.bsu.rent.model.Language;
 import by.bsu.rent.model.PageError;
 import by.bsu.rent.model.Place;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +30,8 @@ public class HomePage extends AbstractPage {
         return this;
     }
 
+    @FindBy(xpath = "//*[@id=\"language\"]")
+    private WebElement languageSelector;
     @FindBy(xpath = "//*[@id=\"search-location-pickup\"]")
     private WebElement placeSelect;
     @FindBy(xpath = "//*[@id=\"search-city\"]")
@@ -69,6 +72,7 @@ public class HomePage extends AbstractPage {
 
     public void selectCompletePlace(Place place){
         try {
+            Thread.sleep(1000);
             selectCountry(place.getCountry());
             Thread.sleep(5000);
             selectCity(place.getCity());
@@ -100,5 +104,13 @@ public class HomePage extends AbstractPage {
         return countryError.isDisplayed()
                 && countryError.getText().
                 contains(error.getErrorDescription());
+    }
+
+    public HomePageGerman changeLanguage(Language language) {
+        Select dropdown = new Select(languageSelector);
+        dropdown.selectByVisibleText(language.getLanguage());
+        LOGGER.info("Language changed to " + language.getLanguage());
+        return new HomePageGerman(driver);
+
     }
 }
