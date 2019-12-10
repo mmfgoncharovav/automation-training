@@ -7,10 +7,22 @@ import by.bsu.rent.model.PageError;
 import by.bsu.rent.model.Place;
 import by.bsu.rent.page.*;
 import by.bsu.rent.service.AgeCreator;
+import by.bsu.rent.service.LocalDateCreator;
 import by.bsu.rent.service.PageErrorCreator;
 import by.bsu.rent.service.PlaceCreator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import sun.rmi.runtime.Log;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class HomePageTest extends CommonConditions {
@@ -33,5 +45,14 @@ public class HomePageTest extends CommonConditions {
         page.search();
         PageError expectedError = PageErrorCreator.EmptyErrorWithInfoFromPropety();
         Assert.assertTrue(page.checkPlaceErrorMessage(expectedError));
+     }
+
+    @Test(description = "date test")
+    public void dateTest() {
+        HomePage page = new HomePage(driver).openPage();
+        page.openEndTimeCalendar();
+        LocalDate date = LocalDateCreator.withInfoFromProperty();
+        Assert.assertFalse(page.isDateAvailable(date));
+
     }
 }

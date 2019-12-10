@@ -15,6 +15,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 public class HomePage extends AbstractPage {
     private static final Logger LOGGER = LogManager.getRootLogger();
@@ -58,6 +62,12 @@ public class HomePage extends AbstractPage {
     private WebElement ageError;
     @FindBy(xpath = "//*[@id=\"country-error\"]")
     private WebElement countryError;
+    @FindBy(xpath = "//*[@id=\"search-rental-end-date\"]")
+    private WebElement endDateSelect;
+    @FindBy(xpath = "//*[@id=\"search-rental-end-time\"]")
+    private WebElement endTimeSelect;
+    @FindBy(xpath = "/html/body/div[4]/div/div[1]/table/tbody/tr[4]/td[not(contains(@class,'day-disabled'))]")
+    private List<WebElement> availableDates;
 
     public void search() {
         searchButton.click();
@@ -128,5 +138,23 @@ public class HomePage extends AbstractPage {
         String text = option.getText();
         LOGGER.info("Current language of the page is" + text);
         return text;
+    }
+
+    public void openEndTimeCalendar() {
+        wait.until(ExpectedConditions.elementToBeClickable(endDateSelect));
+        endDateSelect.click();
+    }
+
+    public boolean isDateAvailable(LocalDate dateTime) {
+        int dayOfMonth = dateTime.getDayOfMonth();
+        LOGGER.info("Input day:" + dayOfMonth);
+        for(int i = 0; i<availableDates.size();i++) {
+            LOGGER.info("Available day: " + availableDates.get(i).getText());
+            if(String.valueOf(dayOfMonth).equals(availableDates.get(i).getText())) {
+                return true;
+            }
+        }
+        return false;
+
     }
 }
