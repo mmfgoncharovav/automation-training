@@ -3,13 +3,11 @@ package by.bsu.rent.test;
 
 
 import by.bsu.rent.model.Age;
+import by.bsu.rent.model.Currency;
 import by.bsu.rent.model.PageError;
 import by.bsu.rent.model.Place;
 import by.bsu.rent.page.*;
-import by.bsu.rent.service.AgeCreator;
-import by.bsu.rent.service.LocalDateCreator;
-import by.bsu.rent.service.PageErrorCreator;
-import by.bsu.rent.service.PlaceCreator;
+import by.bsu.rent.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -53,6 +51,14 @@ public class HomePageTest extends CommonConditions {
         page.openEndTimeCalendar();
         LocalDate date = LocalDateCreator.withInfoFromProperty();
         Assert.assertFalse(page.isDateAvailable(date));
+
+    }
+    @Test
+    public void changingCurrencyTest() {
+        HomePage page = new HomePage(driver).openPage();
+        Currency currency = CurrencyCreator.withInfoFromProperty();
+        page = page.changeCurrency(currency);
+        Assert.assertEquals(page.checkCurrentCurrency(),currency.getCurrency());
 
     }
 }

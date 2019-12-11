@@ -1,9 +1,6 @@
 package by.bsu.rent.page;
 
-import by.bsu.rent.model.Age;
-import by.bsu.rent.model.Language;
-import by.bsu.rent.model.PageError;
-import by.bsu.rent.model.Place;
+import by.bsu.rent.model.*;
 import by.bsu.rent.util.LinksByLanguage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,6 +65,8 @@ public class HomePage extends AbstractPage {
     private WebElement endTimeSelect;
     @FindBy(xpath = "/html/body/div[4]/div/div[1]/table/tbody/tr[4]/td[not(contains(@class,'day-disabled'))]")
     private List<WebElement> availableDates;
+    @FindBy(xpath = "//*[@id=\"currency\"]")
+    private WebElement currencySelect;
 
     public void search() {
         searchButton.click();
@@ -132,11 +131,27 @@ public class HomePage extends AbstractPage {
         return new HomePage(driver);
 
     }
+
+    public HomePage changeCurrency(Currency currency) {
+        Select dropdown = new Select(currencySelect);
+        dropdown.selectByVisibleText(currency.getCurrency());
+        LOGGER.info("Currency changed to " +currency.getCurrency());
+        return new HomePage(driver);
+
+    }
+
+    public String checkCurrentCurrency() {
+        WebElement option = new Select(currencySelect).getFirstSelectedOption();
+        String text = option.getText();
+        LOGGER.info("Current currency is " + text);
+        return text;
+
+    }
     public String checkCurrentLanguage() {
         Select dropdown = new Select(languageSelector);
         WebElement option = dropdown.getFirstSelectedOption();
         String text = option.getText();
-        LOGGER.info("Current language of the page is" + text);
+        LOGGER.info("Current language of the page is " + text);
         return text;
     }
 
