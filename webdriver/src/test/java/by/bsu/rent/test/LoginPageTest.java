@@ -5,16 +5,27 @@ import by.bsu.rent.model.User;
 import by.bsu.rent.page.LoginPage;
 import by.bsu.rent.service.PageErrorCreator;
 import by.bsu.rent.service.UserCreator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends CommonConditions {
+    private static final Logger LOGGER = LogManager.getRootLogger();
     @Test
-    public void testCaptchaWorking() {
+    public void captchaWorkingTest() {
         LoginPage page = new LoginPage(driver).openPage();
         User user = UserCreator.withInfoFromProperty();
         page.login(user);
-        PageError expectedError = PageErrorCreator.CaptchaError();
+        PageError expectedError = PageErrorCreator.captchaError();
+        Assert.assertTrue(page.checkErrorMessage(expectedError));
+    }
+    @Test
+    public void  recoveryEmailVerificationTest() throws Exception {
+        LoginPage page = new LoginPage(driver).openPage();
+        User user = UserCreator.withInfoFromProperty();
+        page.recoverPassword(user);
+        PageError expectedError = PageErrorCreator.emailError();
         Assert.assertTrue(page.checkErrorMessage(expectedError));
     }
 }

@@ -9,16 +9,22 @@ public class PageErrorCreator {
             "testdata.age.error";
     private static final String CAPTCHA_ERROR =
             "testdata.captcha.error";
+    private static final String EMAIL_ERROR =
+            "testdata.email.error";
 
-    public static PageError AgeErrorWithInfoFromProperty() {
+    public static PageError ageErrorWithInfoFromProperty() {
         return new PageError(TestDataReader.getTestData(AGE_ERROR));
     }
 
-    public static PageError EmptyErrorWithInfoFromPropety() {
+    public static PageError emptyErrorWithInfoFromPropety() {
         return new PageError(TestDataReader.getTestData(EMPTY_FIELDS_ERROR));
     }
 
-    public static PageError CaptchaError() {
+    public static PageError captchaError() {
         return new PageError(TestDataReader.getTestData(CAPTCHA_ERROR));
+    }
+
+    public static PageError emailError() {
+        return new PageError(TestDataReader.getTestData(EMAIL_ERROR));
     }
 }

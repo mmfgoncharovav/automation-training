@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends AbstractPage {
@@ -36,6 +37,12 @@ public class LoginPage extends AbstractPage {
     WebElement loginButton;
     @FindBy(xpath = "//*[@id=\"recoveryMessage\"]")
     WebElement errorMessage;
+    @FindBy(xpath = "//*[@id=\"recoveryEmail\"]")
+    WebElement recoveryEmailInput;
+    @FindBy(xpath = "/html/body/div[1]/div[3]/div[2]/div/div[1]/div[2]/form/a")
+    WebElement recoveryLink;
+    @FindBy(xpath = "//*[@id=\"recoverySend\"]")
+    WebElement recoverySendButton;
 
     public void login(User user) {
         emailInput.sendKeys(user.getEmail());
@@ -43,8 +50,18 @@ public class LoginPage extends AbstractPage {
         loginButton.click();
     }
 
+    public void recoverPassword(User user) {
+        recoveryLink.click();
+        wait.until(ExpectedConditions.elementToBeClickable(recoveryEmailInput));
+        recoveryEmailInput.sendKeys(user.getEmail());
+        recoverySendButton.click();
+    }
+
     public boolean checkErrorMessage(PageError error) {
-        return errorMessage.isDisplayed()
-                && errorMessage.getText().contains(error.getErrorDescription());
+        if(errorMessage.isDisplayed()) {
+            LOGGER.debug("error message element is displayed");
+            return true;
+        }
+        return false;
     }
 }

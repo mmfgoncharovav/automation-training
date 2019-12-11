@@ -69,6 +69,10 @@ public class HomePage extends AbstractPage {
     private List<WebElement> availableDates;
     @FindBy(xpath = "//*[@id=\"currency\"]")
     private WebElement currencySelect;
+    @FindBy(xpath = "//*[@id=\"search-rental-start-time\"]")
+    private WebElement startTime;
+    @FindBy(xpath = "//*[@id=\"search-rental-end-time\"]")
+    private WebElement endTime;
 
     public void search() {
         searchButton.click();
