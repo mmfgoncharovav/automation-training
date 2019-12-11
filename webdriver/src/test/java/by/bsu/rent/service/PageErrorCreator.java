@@ -7,6 +7,8 @@ public class PageErrorCreator {
             "testdata.empty.fields.error";
     private static final String AGE_ERROR =
             "testdata.age.error";
+    private static final String CAPTCHA_ERROR =
+            "testdata.captcha.error";
 
     public static PageError AgeErrorWithInfoFromProperty() {
         return new PageError(TestDataReader.getTestData(AGE_ERROR));
@@ -14,5 +16,9 @@ public class PageErrorCreator {
 
     public static PageError EmptyErrorWithInfoFromPropety() {
         return new PageError(TestDataReader.getTestData(EMPTY_FIELDS_ERROR));
+    }
+
+    public static PageError CaptchaError() {
+        return new PageError(TestDataReader.getTestData(CAPTCHA_ERROR));
     }
 }

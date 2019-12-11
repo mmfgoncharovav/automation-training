@@ -3,7 +3,7 @@
 <suite name="Smoke" verbose="1">
     <test name="LanguageChanging" >
         <classes>
-            <class name="by.bsu.rent.test.LanguageChangingTest"/>
+            <class name="by.bsu.rent.test.FunctionalityTests"/>
         </classes>
     </test>
 </suite>

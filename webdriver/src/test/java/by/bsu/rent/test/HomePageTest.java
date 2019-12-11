@@ -59,6 +59,25 @@ public class HomePageTest extends CommonConditions {
         Currency currency = CurrencyCreator.withInfoFromProperty();
         page = page.changeCurrency(currency);
         Assert.assertEquals(page.checkCurrentCurrency(),currency.getCurrency());
-
     }
+    @Test
+    public void checkAvailableCities() {
+        HomePage page = new HomePage(driver).openPage();
+        Place place = PlaceCreator.withInfoFromProperty();
+        page.selectCountry(place.getCountry());
+        List<String> expectedCities = AvailableCitiesCreator.withInfoFromProperty();
+        List<String> actualCities = page.getAllCitiesOptions();
+        Assert.assertEquals(actualCities,expectedCities);
+    }
+    @Test
+    public void checkAvailablePlaces() {
+        HomePage page = new HomePage(driver).openPage();
+        Place place = PlaceCreator.withInfoFromProperty();
+        page.selectCountry(place.getCountry());
+        page.selectCity(place.getCity());
+        List<String> expectedPlaces = AvailablePlacesCreator.withInfoFromProperty();
+        List<String> actualPlaces = page.getAllPlacesOptions();
+        Assert.assertEquals(actualPlaces,expectedPlaces);
+    }
+
 }

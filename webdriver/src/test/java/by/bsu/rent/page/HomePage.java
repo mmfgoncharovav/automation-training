@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -77,29 +79,29 @@ public class HomePage extends AbstractPage {
     }
 
     public void selectCountry(String country) {
+        wait.until(ExpectedConditions.elementToBeClickable(countrySelect));
         Select dropdown = new Select(countrySelect);
         dropdown.selectByVisibleText(country);
         LOGGER.info(country+ " selected");
     }
 
     public void selectCity(String city) {
+        wait.until(ExpectedConditions.elementToBeClickable(citySelect));
         Select dropdown = new Select(citySelect);
         dropdown.selectByVisibleText(city);
         LOGGER.info(city+ " selected");
     }
 
     public void selectPlaceInCity(String place) {
+        wait.until(ExpectedConditions.elementToBeClickable(placeSelect));
         Select dropdown = new Select(placeSelect);
         dropdown.selectByVisibleText(place);
         LOGGER.info(place+ " selected");
     }
 
     public void selectCompletePlace(Place place) {
-        wait.until(ExpectedConditions.elementToBeClickable(countrySelect));
         selectCountry(place.getCountry());
-        wait.until(ExpectedConditions.elementToBeClickable(citySelect));
         selectCity(place.getCity());
-        wait.until(ExpectedConditions.elementToBeClickable(placeSelect));
         selectPlaceInCity(place.getPlaceInCity());
     }
 
@@ -162,14 +164,42 @@ public class HomePage extends AbstractPage {
 
     public boolean isDateAvailable(LocalDate dateTime) {
         int dayOfMonth = dateTime.getDayOfMonth();
-        LOGGER.info("Input day:" + dayOfMonth);
+        LOGGER.debug("Input day for availability testing: " + dayOfMonth);
         for(int i = 0; i<availableDates.size();i++) {
-            LOGGER.info("Available day: " + availableDates.get(i).getText());
             if(String.valueOf(dayOfMonth).equals(availableDates.get(i).getText())) {
                 return true;
             }
         }
         return false;
+
+    }
+
+    public  List<String> getAllCitiesOptions() {
+        wait.until(ExpectedConditions.elementToBeClickable(citySelect));
+        List<WebElement> cities = new Select(citySelect).getOptions();
+        cities.remove(0);
+        List<String> dropdown = new ArrayList<>();
+        Iterator<WebElement> itr = cities.iterator();
+        while (itr.hasNext()) {
+            String st = itr.next().getText();
+            LOGGER.debug("City: " + st);
+            dropdown.add(st);
+        }
+        return dropdown;
+    }
+
+    public List<String> getAllPlacesOptions() {
+        wait.until(ExpectedConditions.elementToBeClickable(placeSelect));
+        List<WebElement> places = new Select(placeSelect).getOptions();
+        places.remove(0);
+        List<String> dropdown = new ArrayList<>();
+        Iterator<WebElement> itr = places.iterator();
+        while (itr.hasNext()) {
+            String st = itr.next().getText();
+            LOGGER.debug("Place: " + st);
+            dropdown.add(st);
+        }
+        return dropdown;
 
     }
 }
