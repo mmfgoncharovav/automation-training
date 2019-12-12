@@ -10,17 +10,17 @@ import org.testng.annotations.Test;
 public class FunctionalityTests extends  CommonConditions {
     @Test(description = "Test for changing language of the page")
     public void changingLanguageToGermanTest() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         HomePage pageDifferentLanguage= page.changeLanguage(LanguageCreator.
                 withInfoFromProperty());
-        Assert.assertEquals(pageDifferentLanguage.checkCurrentLanguage(),
+        Assert.assertEquals(pageDifferentLanguage.getCurrentLanguage(),
                 LanguageCreator.withInfoFromProperty().getLanguage());
 
 
     }
-    @Test
+    @Test(description = "Test to check if info is shown on page")
     public void isInfoDisplayedOnContactPage() {
-        ContactPage page = new ContactPage(driver).openPage();
+        ContactPage page = new ContactPage().openPage();
         Assert.assertTrue(ContactPageChecker.isAllRentingInfoAvailable(page));
     }
 }

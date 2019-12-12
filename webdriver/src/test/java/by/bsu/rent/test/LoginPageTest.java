@@ -12,17 +12,17 @@ import org.testng.annotations.Test;
 
 public class LoginPageTest extends CommonConditions {
     private static final Logger LOGGER = LogManager.getRootLogger();
-    @Test
+    @Test(description = "Test to check if captcha is working on login page")
     public void captchaWorkingTest() {
-        LoginPage page = new LoginPage(driver).openPage();
+        LoginPage page = new LoginPage().openPage();
         User user = UserCreator.withInfoFromProperty();
         page.login(user);
         PageError expectedError = PageErrorCreator.captchaError();
         Assert.assertTrue(page.checkErrorMessage(expectedError));
     }
-    @Test
+    @Test(description = "Test to check if email verification is working (email must exist in database")
     public void  recoveryEmailVerificationTest() throws Exception {
-        LoginPage page = new LoginPage(driver).openPage();
+        LoginPage page = new LoginPage().openPage();
         User user = UserCreator.withInfoFromProperty();
         page.recoverPassword(user);
         PageError expectedError = PageErrorCreator.emailError();

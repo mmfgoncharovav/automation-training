@@ -1,5 +1,6 @@
 package by.bsu.rent.page;
 
+import by.bsu.rent.driver.DriverSingleton;
 import by.bsu.rent.model.PageError;
 import by.bsu.rent.model.User;
 import org.apache.logging.log4j.LogManager;
@@ -17,8 +18,8 @@ public class LoginPage extends AbstractPage {
             "https://www.economycarrentals.com/en-us/customer/member";
     private final WebDriverWait wait;
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage() {
+        super(DriverSingleton.getDriver());
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
         LOGGER.info("Created LoginPage entity");

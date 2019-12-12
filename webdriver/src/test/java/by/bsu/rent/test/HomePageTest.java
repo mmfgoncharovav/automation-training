@@ -19,7 +19,7 @@ public class HomePageTest extends CommonConditions {
 
     @Test(description = "Test for checking working age restrictions")
     public void invalidAgeTest() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         Place place = PlaceCreator.withInfoFromProperty();
         page.selectCompletePlace(place);
         page.setAgeCheckButton();
@@ -31,45 +31,45 @@ public class HomePageTest extends CommonConditions {
     }
     @Test(description = "Test for checking being able to search for cars without specifying any info")
     public void emptyInputTest() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         page.search();
         PageError expectedError = PageErrorCreator.emptyErrorWithInfoFromPropety();
         Assert.assertTrue(page.checkPlaceErrorMessage(expectedError));
      }
 
-    @Test(description = "date test")
+    @Test(description = "Date test")
     public void dateTest() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         page.openEndTimeCalendar();
         LocalDate date = LocalDateCreator.withInfoFromProperty();
         Assert.assertFalse(page.isDateAvailable(date));
 
     }
-    @Test
+    @Test (description = "Test to check if changing currency function works")
     public void changingCurrencyTest() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         Currency currency = CurrencyCreator.withInfoFromProperty();
         page = page.changeCurrency(currency);
         Assert.assertEquals(page.checkCurrentCurrency(),currency.getCurrency());
     }
-    @Test
+    @Test (description = "Test to check if available cities are shown according to the country")
     public void checkAvailableCities() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         Place place = PlaceCreator.withInfoFromProperty();
         page.selectCountry(place.getCountry());
         List<String> expectedCities = AvailableCitiesCreator.withInfoFromProperty();
         List<String> actualCities = page.getAllCitiesOptions();
-        Assert.assertEquals(actualCities,expectedCities);
+        Assert.assertEquals(expectedCities,actualCities);
     }
-    @Test
+    @Test (description = "Test to check if available places are shown according to the country and city")
     public void checkAvailablePlaces() {
-        HomePage page = new HomePage(driver).openPage();
+        HomePage page = new HomePage().openPage();
         Place place = PlaceCreator.withInfoFromProperty();
         page.selectCountry(place.getCountry());
         page.selectCity(place.getCity());
         List<String> expectedPlaces = AvailablePlacesCreator.withInfoFromProperty();
         List<String> actualPlaces = page.getAllPlacesOptions();
-        Assert.assertEquals(actualPlaces,expectedPlaces);
+        Assert.assertEquals(expectedPlaces, actualPlaces);
     }
 
 }

@@ -10,14 +10,8 @@ import org.testng.annotations.Listeners;
 
 @Listeners({TestListener.class})
 public class CommonConditions {
-    protected WebDriver driver;
     private static final String RESOURCES_PATH = "src\\test\\resources\\";
 
-    @BeforeMethod
-    public void setUpDriver() {
-        driver = DriverSingleton.getDriver();
-
-    }
     @AfterMethod (alwaysRun = true)
     public void tearDownDriver() {
         DriverSingleton.closeDriver();

@@ -1,5 +1,6 @@
 package by.bsu.rent.page;
 
+import by.bsu.rent.driver.DriverSingleton;
 import by.bsu.rent.model.*;
 import by.bsu.rent.util.LinksByLanguage;
 import org.apache.logging.log4j.LogManager;
@@ -25,8 +26,8 @@ public class HomePage extends AbstractPage {
             "https://www.economycarrentals.com/en-us";
     private final WebDriverWait wait;
 
-    public HomePage(WebDriver driver) {
-        super(driver);
+    public HomePage() {
+        super(DriverSingleton.getDriver());
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
         LOGGER.info("Created HomePage entity");
@@ -136,7 +137,7 @@ public class HomePage extends AbstractPage {
         Select dropdown = new Select(languageSelector);
         dropdown.selectByVisibleText(language.getLanguage());
         LOGGER.info("Language changed to " + language.getLanguage());
-        return new HomePage(driver);
+        return new HomePage();
 
     }
 
@@ -144,7 +145,7 @@ public class HomePage extends AbstractPage {
         Select dropdown = new Select(currencySelect);
         dropdown.selectByVisibleText(currency.getCurrency());
         LOGGER.info("Currency changed to " +currency.getCurrency());
-        return new HomePage(driver);
+        return new HomePage();
 
     }
 
@@ -155,7 +156,7 @@ public class HomePage extends AbstractPage {
         return text;
 
     }
-    public String checkCurrentLanguage() {
+    public String getCurrentLanguage() {
         Select dropdown = new Select(languageSelector);
         WebElement option = dropdown.getFirstSelectedOption();
         String text = option.getText();

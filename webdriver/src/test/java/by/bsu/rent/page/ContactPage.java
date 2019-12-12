@@ -1,5 +1,6 @@
 package by.bsu.rent.page;
 
+import by.bsu.rent.driver.DriverSingleton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -14,8 +15,8 @@ public class ContactPage extends AbstractPage {
             "https://www.economycarrentals.com/en-us/information/contact";
     private final WebDriverWait wait;
 
-    public ContactPage(WebDriver driver) {
-        super(driver);
+    public ContactPage() {
+        super(DriverSingleton.getDriver());
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
         LOGGER.info("Created ContactPage entity");
