@@ -19,7 +19,7 @@ public class CommonConditions {
 
     }
     @AfterMethod (alwaysRun = true)
-    public void tearDownMozillaDriver() {
+    public void tearDownDriver() {
         DriverSingleton.closeDriver();
     }
 

@@ -1,12 +1,17 @@
 package by.bsu.rent.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class PageError {
+    private static final Logger LOGGER = LogManager.getRootLogger();
     private String errorDescription;
 
     public PageError(String errorDescription) {
         this.errorDescription = errorDescription;
+        LOGGER.info("PageError initialised");
     }
 
     public String getErrorDescription() {

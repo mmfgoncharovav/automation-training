@@ -1,13 +1,18 @@
 package by.bsu.rent.model;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class Language {
     private String language;
+    private static final Logger LOGGER = LogManager.getRootLogger();
 
     public Language(String language) {
         this.language = language;
+        LOGGER.info("Language object initialised");
     }
 
     public String getLanguage() {

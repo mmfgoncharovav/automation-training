@@ -21,6 +21,7 @@ public class LoginPage extends AbstractPage {
         super(driver);
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
+        LOGGER.info("Created LoginPage entity");
     }
 
     public LoginPage openPage() {
@@ -48,13 +49,16 @@ public class LoginPage extends AbstractPage {
         emailInput.sendKeys(user.getEmail());
         passwordInput.sendKeys(user.getPassword());
         loginButton.click();
+        LOGGER.info("User tried to log in");
     }
 
     public void recoverPassword(User user) {
+
         recoveryLink.click();
         wait.until(ExpectedConditions.elementToBeClickable(recoveryEmailInput));
         recoveryEmailInput.sendKeys(user.getEmail());
         recoverySendButton.click();
+        LOGGER.info("User tried to recover password");
     }
 
     public boolean checkErrorMessage(PageError error) {

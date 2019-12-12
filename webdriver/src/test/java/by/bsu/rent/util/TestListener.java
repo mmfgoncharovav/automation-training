@@ -16,22 +16,24 @@ import java.time.format.DateTimeFormatter;
 
 
 public class TestListener implements ITestListener {
-    private final Logger log = LogManager.getRootLogger();
+    private final Logger logger = LogManager.getRootLogger();
 
     public void onTestStart(ITestResult iTestResult) {
-
+        logger.info(iTestResult.getMethod().getMethodName() + " test started");
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
-
+        logger.info(iTestResult.getMethod().getMethodName() + "build successful");
     }
 
     public void onTestFailure(ITestResult iTestResult) {
+        logger.error(iTestResult.getMethod().getMethodName() + " test failed");
+        logger.error(iTestResult.getThrowable().getMessage());
         saveScreenshot();
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
-
+        logger.info(iTestResult.getMethod().getMethodName() + "skipped");
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
@@ -39,11 +41,11 @@ public class TestListener implements ITestListener {
     }
 
     public void onStart(ITestContext iTestContext) {
-
+        logger.info("Started build test suite");
     }
 
     public void onFinish(ITestContext iTestContext) {
-
+        logger.info("Finished build test suite");
     }
 
     private void saveScreenshot() {
@@ -56,7 +58,7 @@ public class TestListener implements ITestListener {
                             + getCurrentTimeAsString() +
                             ".png"));
         } catch (IOException e) {
-            log.error("Failed to save screenshot: " + e.getLocalizedMessage());
+            logger.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }
     }
 

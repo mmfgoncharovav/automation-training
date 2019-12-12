@@ -29,6 +29,7 @@ public class HomePage extends AbstractPage {
         super(driver);
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
+        LOGGER.info("Created HomePage entity");
     }
 
     public HomePage openPage() {
@@ -107,6 +108,7 @@ public class HomePage extends AbstractPage {
         selectCountry(place.getCountry());
         selectCity(place.getCity());
         selectPlaceInCity(place.getPlaceInCity());
+        LOGGER.info("Complete place selected");
     }
 
     public void setAge(Age age) {
@@ -164,6 +166,7 @@ public class HomePage extends AbstractPage {
     public void openEndTimeCalendar() {
         wait.until(ExpectedConditions.elementToBeClickable(endDateSelect));
         endDateSelect.click();
+        LOGGER.info("End time calendar opened");
     }
 
     public boolean isDateAvailable(LocalDate dateTime) {

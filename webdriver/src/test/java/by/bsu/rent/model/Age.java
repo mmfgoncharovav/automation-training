@@ -1,12 +1,17 @@
 package by.bsu.rent.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class Age {
+    private static final Logger LOGGER = LogManager.getRootLogger();
     private int age;
 
     public Age(int age) {
         this.age = age;
+        LOGGER.info("Age object initialised");
     }
 
     public int getAge() {

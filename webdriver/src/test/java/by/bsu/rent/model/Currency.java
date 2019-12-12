@@ -1,13 +1,18 @@
 package by.bsu.rent.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Currency {
+    private static final Logger LOGGER = LogManager.getRootLogger();
     private String currency;
 
     public Currency(String currency) {
         this.currency = currency;
+        LOGGER.info("Currency object initialised");
     }
 
     public String getCurrency() {

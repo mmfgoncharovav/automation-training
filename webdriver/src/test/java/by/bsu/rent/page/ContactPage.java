@@ -18,6 +18,7 @@ public class ContactPage extends AbstractPage {
         super(driver);
         PageFactory.initElements(this.driver, this);
         wait = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
+        LOGGER.info("Created ContactPage entity");
     }
 
     public ContactPage openPage() {
