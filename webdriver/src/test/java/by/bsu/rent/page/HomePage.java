@@ -77,10 +77,14 @@ public class HomePage extends AbstractPage {
     private WebElement endTime;
 
     public void search() {
+        wait.until(ExpectedConditions.visibilityOf(searchButton));
+        wait.until(ExpectedConditions.elementToBeClickable(searchButton));
         searchButton.click();
     }
 
     public void setAgeCheckButton() {
+        wait.until(ExpectedConditions.visibilityOf(ageCheckButton));
+        wait.until(ExpectedConditions.elementToBeClickable(ageCheckButton));
         ageCheckButton.click();
     }
 
@@ -165,6 +169,7 @@ public class HomePage extends AbstractPage {
     }
 
     public void openEndTimeCalendar() {
+        wait.until(ExpectedConditions.visibilityOf(endDateSelect));
         wait.until(ExpectedConditions.elementToBeClickable(endDateSelect));
         endDateSelect.click();
         LOGGER.info("End time calendar opened");

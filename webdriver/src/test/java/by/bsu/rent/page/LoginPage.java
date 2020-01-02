@@ -54,7 +54,7 @@ public class LoginPage extends AbstractPage {
     }
 
     public void recoverPassword(User user) {
-
+        wait.until(ExpectedConditions.elementToBeClickable(recoveryLink));
         recoveryLink.click();
         wait.until(ExpectedConditions.elementToBeClickable(recoveryEmailInput));
         recoveryEmailInput.sendKeys(user.getEmail());
