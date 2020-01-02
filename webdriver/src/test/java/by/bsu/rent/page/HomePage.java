@@ -137,7 +137,7 @@ public class HomePage extends AbstractPage {
         Select dropdown = new Select(languageSelector);
         dropdown.selectByVisibleText(language.getLanguage());
         LOGGER.info("Language changed to " + language.getLanguage());
-        return new HomePage();
+        return this;
 
     }
 
@@ -145,7 +145,7 @@ public class HomePage extends AbstractPage {
         Select dropdown = new Select(currencySelect);
         dropdown.selectByVisibleText(currency.getCurrency());
         LOGGER.info("Currency changed to " +currency.getCurrency());
-        return new HomePage();
+        return this;
 
     }
 
