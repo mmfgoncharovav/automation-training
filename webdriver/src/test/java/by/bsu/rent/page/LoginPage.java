@@ -31,6 +31,8 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
+    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/button")
+    WebElement cookieButton;
     @FindBy(xpath = "/html/body/div[1]/div[3]/div[2]/div/div[1]/div[2]/form/div[1]/input")
     WebElement emailInput;
     @FindBy(xpath = "/html/body/div[1]/div[3]/div[2]/div/div[1]/div[2]/form/div[2]/input")
@@ -54,6 +56,7 @@ public class LoginPage extends AbstractPage {
     }
 
     public void recoverPassword(User user) {
+        cookieButton.click();
         wait.until(ExpectedConditions.elementToBeClickable(recoveryLink));
         recoveryLink.click();
         wait.until(ExpectedConditions.elementToBeClickable(recoveryEmailInput));
