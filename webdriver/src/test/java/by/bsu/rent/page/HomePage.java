@@ -80,14 +80,18 @@ public class HomePage extends AbstractPage {
     private WebElement endTime;
 
     public void search() {
-        cookieButton.click();
+        if(cookieButton.isDisplayed()) {
+            cookieButton.click();
+        }
         wait.until(ExpectedConditions.visibilityOf(searchButton));
         wait.until(ExpectedConditions.elementToBeClickable(searchButton));
         searchButton.click();
     }
 
     public void setAgeCheckButton() {
-        cookieButton.click();
+        if(cookieButton.isDisplayed()) {
+            cookieButton.click();
+        }
         wait.until(ExpectedConditions.visibilityOf(ageCheckButton));
         wait.until(ExpectedConditions.elementToBeClickable(ageCheckButton));
         ageCheckButton.click();
@@ -174,7 +178,9 @@ public class HomePage extends AbstractPage {
     }
 
     public void openEndTimeCalendar() {
-        cookieButton.click();
+        if(cookieButton.isDisplayed()) {
+            cookieButton.click();
+        }
         wait.until(ExpectedConditions.visibilityOf(endDateSelect));
         wait.until(ExpectedConditions.elementToBeClickable(endDateSelect));
         endDateSelect.click();
