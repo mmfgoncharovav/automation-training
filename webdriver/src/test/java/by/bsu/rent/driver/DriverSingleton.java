@@ -16,7 +16,6 @@ public class DriverSingleton {
                     WebDriverManager.chromedriver().setup();
                     driver = new ChromeDriver();
                     driver.manage().window().maximize();
-                    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
                     return driver;
     }
     public static void closeDriver() {
